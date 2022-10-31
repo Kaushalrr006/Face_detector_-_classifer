@@ -29,7 +29,18 @@ log_file_path = '../trained_models/gender_models/gender_training.log'
 trained_models_path = '../trained_models/gender_models/gender_mini_XCEPTION'
 
 # data loader
- 
+data_loader = DataManager(dataset_name)
+ground_truth_data = data_loader.get_data()
+train_keys, val_keys = split_imdb_data(ground_truth_data, validation_split)
+print('Number of training samples:', len(train_keys))
+print('Number of validation samples:', len(val_keys))
+image_generator = ImageGenerator(ground_truth_data, batch_size,
+                                 input_shape[:2],
+                                 train_keys, val_keys, None,
+                                 path_prefix=images_path,
+                                 vertical_flip_probability=0,
+                                 grayscale=grayscale,
+                                 do_random_crop=do_random_crop)
 
  
 
